@@ -1,3 +1,13 @@
+<script lang="ts">
+    import { formatCpf } from "$lib/cpf";
+
+    let cpf = "";
+    $: cpf = formatCpf(cpf);
+
+    function cpfKey(ev: KeyboardEvent) {
+        if(isNaN(<any>ev.key)) ev.preventDefault();
+    }
+</script>
 <style>
     :global(body) {
         display: flex;
@@ -52,9 +62,9 @@
     <h1>Cadastro de Usuário</h1>
     <form>
         <label for="cpf">CPF:</label>
-        <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+        <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" bind:value={cpf} on:keypress={cpfKey} required>
         <label for="password">Senha:</label>
-        <input type="password" name="password">
+        <input type="password" name="password" required>
         <button type="submit">Cadastrar</button>
     </form>
 </main>
