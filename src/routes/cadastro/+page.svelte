@@ -1,11 +1,43 @@
 <script lang="ts">
-    import { formatCpf } from "$lib/cpf";
+    import { formatCpf, validateCpf } from "$lib/cpf";
 
     let cpf = "";
     $: cpf = formatCpf(cpf);
+    let cpfInvalid = false;
+    let cpfElement: HTMLInputElement;
+
+    let password = "";
+    let passwordInvalidMessage = "";
+    let passwordInvalid = false;
+
+    let form: HTMLFormElement;
 
     function cpfKey(ev: KeyboardEvent) {
         if(isNaN(<any>ev.key)) ev.preventDefault();
+    }
+
+    async function validateAndSubmit() {
+        if(!validateCpf(cpf)) {
+            cpfInvalid = true;
+            return;
+        }
+        if(password.length < 8) {
+            passwordInvalid = true;
+            passwordInvalidMessage = "Muito curta";
+            return;
+        }
+        let validatePass = await (await fetch("/api/validatepass", 
+            { method: "post", body: JSON.stringify({cpf: cpf, password: password}) }
+        )).text() === "true";
+        if(!validatePass) {
+            passwordInvalid = true;
+            passwordInvalidMessage = "Senha inválida";
+            return;
+        }
+        cpfInvalid = false;
+        passwordInvalid = false;
+        passwordInvalidMessage = "";
+        form.submit();
     }
 </script>
 <style>
@@ -56,15 +88,23 @@
         text-align: center;
         font-size: x-large;
     }
+    .labelInvalid {
+        color: red;
+    }
+    .inputInvalid {
+        border-color: red;
+    }
 </style>
 <main>
     <img src="/brasao.png" alt="" width=100 height=100>
     <h1>Cadastro de Usuário</h1>
-    <form>
-        <label for="cpf">CPF:</label>
-        <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" bind:value={cpf} on:keypress={cpfKey} required>
-        <label for="password">Senha:</label>
-        <input type="password" name="password" required>
-        <button type="submit">Cadastrar</button>
+    <form method="post" bind:this={form}>
+        <label for="cpf" class:labelInvalid={cpfInvalid}>CPF:</label>
+        <input type="text" name="cpf" maxlength=14 bind:value={cpf} bind:this={cpfElement} on:keypress={cpfKey} class:inputInvalid={cpfInvalid} required>
+        <label for="password" class:labelInvalid={passwordInvalid}>
+            Senha{#if passwordInvalidMessage}{` (${passwordInvalidMessage})`}{/if}:
+        </label>
+        <input type="password" name="password" bind:value={password} required class:inputInvalid={passwordInvalid}>
+        <button type="button" on:click={validateAndSubmit}>Cadastrar</button>
     </form>
 </main>

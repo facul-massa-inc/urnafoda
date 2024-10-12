@@ -21,6 +21,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"sqlite3": "^5.1.7"
+		"sqlite3": "^5.1.7",
+		"ts-dotenv": "^0.9.1",
+		"typescript-cookie": "^1.0.6"
 	}
 }

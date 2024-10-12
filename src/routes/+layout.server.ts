@@ -1,3 +1,10 @@
-import sqlite3 from "sqlite3";
+import { db } from "$lib/server/db";
 
-const db = new sqlite3.Database("db.sqlite");
+db.run(`
+	CREATE TABLE IF NOT EXISTS users (
+		cpf VARCHAR(14) NOT NULL,
+		password BINARY(32) NOT NULL,
+		salt BINARY(16) NOT NULL,
+		PRIMARY KEY (cpf)
+	);
+`)
