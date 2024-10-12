@@ -10,7 +10,7 @@ export interface User {
 }
 
 export async function handleUser(cpf: string, password: string) {
-    let entry: User | null = await new Promise(resolve => db.get(`SELECT * FROM users WHERE cpf='${cpf}'`, (err, row) => {
+    let entry: User | null = await new Promise(resolve => db.prepare(`SELECT * FROM users WHERE cpf=?`).get(cpf, (err, row) => {
         resolve(<User | null>row);
     }));
     if(entry) {
@@ -20,6 +20,7 @@ export async function handleUser(cpf: string, password: string) {
     }
     let salt = crypto.randomBytes(16);
     let hashedPass = crypto.pbkdf2Sync(password, salt, 1000, 32, "sha256");
-    db.run(`INSERT INTO users (cpf, password, salt) VALUES ('${cpf}', X'${hashedPass.toString("hex")}', X'${salt.toString("hex")}')`);
+    db.prepare(`INSERT INTO users (cpf, password, salt) VALUES (?, ?, ?)`)
+        .run(cpf, hashedPass, salt);
     return true;
 }

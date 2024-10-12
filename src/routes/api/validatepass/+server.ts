@@ -14,7 +14,7 @@ export async function POST({ request }) {
     }catch {
         return error(400);
     }
-    let entry: User | null = await new Promise(resolve => db.get(`SELECT * FROM users WHERE cpf='${json.cpf}'`, (err, row) => {
+    let entry: User | null = await new Promise(resolve => db.prepare(`SELECT * FROM users WHERE cpf=?`).get(json.cpf, (err, row) => {
         resolve(<User | null>row);
     }));
     if(!entry) {
