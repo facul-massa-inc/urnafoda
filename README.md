@@ -1,4 +1,4 @@
-pra isso pegar lembra que precisa criar um arquivo na pasta do projet com nome: ``.env``
+pra isso pegar lembra que precisa criar um arquivo na pasta do projeto com nome: ``.env``
 
 dentro do arquivo:
 ```
