@@ -16,7 +16,8 @@
         if(isNaN(<any>ev.key)) ev.preventDefault();
     }
 
-    async function validateAndSubmit() {
+    async function validateAndSubmit(ev: SubmitEvent) {
+        ev.preventDefault();
         if(!validateCpf(cpf)) {
             cpfInvalid = true;
             return;
@@ -98,13 +99,13 @@
 <main>
     <img src="/brasao.png" alt="" width=100 height=100>
     <h1>Cadastro de Usuário</h1>
-    <form method="post" bind:this={form}>
+    <form method="post" on:submit={validateAndSubmit} bind:this={form}>
         <label for="cpf" class:labelInvalid={cpfInvalid}>CPF:</label>
         <input type="text" name="cpf" maxlength=14 bind:value={cpf} bind:this={cpfElement} on:keypress={cpfKey} class:inputInvalid={cpfInvalid} required>
         <label for="password" class:labelInvalid={passwordInvalid}>
             Senha{#if passwordInvalidMessage}{` (${passwordInvalidMessage})`}{/if}:
         </label>
         <input type="password" name="password" bind:value={password} required class:inputInvalid={passwordInvalid}>
-        <button type="button" on:click={validateAndSubmit}>Cadastrar</button>
+        <button type="submit">Cadastrar</button>
     </form>
 </main>

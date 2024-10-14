@@ -14,8 +14,8 @@ export const actions: Actions = {
         if(!await handleUser(cpf, password)) {
             return error(403, "Forbidden");
         }
-        event.cookies.set("cpf", cpf, { path: "/", httpOnly: false });
-        event.cookies.set("token", getToken(cpf), { path: "/", httpOnly: false });
+        event.cookies.set("cpf", cpf, { path: "/", httpOnly: false, sameSite: "lax" });
+        event.cookies.set("token", getToken(cpf), { path: "/", httpOnly: false, sameSite: "lax" });
         return redirect(302, "/");
     }
 };
