@@ -27,9 +27,11 @@
             passwordInvalidMessage = "Muito curta";
             return;
         }
-        let validatePass = await (await fetch("/api/validatepass", 
-            { method: "post", body: JSON.stringify({cpf: cpf, password: password}) }
-        )).text() === "true";
+        let validatePass = await (await fetch("/api/validatepass", { 
+            method: "post", 
+            body: JSON.stringify({cpf: cpf, password: password}), 
+            headers: {"Content-Type": "application/json"} 
+        })).text() === "true";
         if(!validatePass) {
             passwordInvalid = true;
             passwordInvalidMessage = "Senha inválida";

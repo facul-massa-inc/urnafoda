@@ -7,7 +7,8 @@
     const digitCount = 4;
     let numeros: number[] = [];
     let candidato: Candidato | BrancoNulo | null = null;
-    let fim = false;
+    let fim = data.alreadyVoted;
+
     function logout() {
         removeCookie("cpf");
         removeCookie("token");
@@ -45,6 +46,10 @@
     }
 
     function keyDown(ev: KeyboardEvent) {
+        if(ev.key === "Enter") {
+            confirma();
+            return;
+        }
         if(ev.key === "Backspace" || ev.key === "Delete") {
             corrige();
             return;
@@ -62,6 +67,7 @@
         const confirma = new Audio("/confirma.mp3");
         confirma.play();
         fim = true;
+        fetch("/api/vote", {method: "post", body: numeros.join(""), headers: {"Content-Type": "text/plain"}});
     }
 </script>
 <svelte:window on:keydown={keyDown} />
