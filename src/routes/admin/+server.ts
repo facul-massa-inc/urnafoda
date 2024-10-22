@@ -1,6 +1,9 @@
 import { db } from "$lib/server/db"
 import { env } from '$lib/server/env';
 import { error } from "@sveltejs/kit";
+import { Formatter } from "fracturedjsonjs";
+
+const formatter = new Formatter();
 
 export async function POST({ request }) {
     let auth = request.headers.get("Authorization");
@@ -9,7 +12,7 @@ export async function POST({ request }) {
     }
     let comand = await request.text();
     let res: string = await new Promise(resolve => db.all(comand, (err: Error, rows: unknown[]) =>
-        resolve(JSON.stringify(err ?? rows))
+        resolve(formatter.Serialize(err ?? rows)!)
     ));
     return new Response(res, { status: 200 });
 }   

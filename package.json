@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"fracturedjsonjs": "^4.0.2",
 		"sqlite3": "^5.1.7",
 		"ts-dotenv": "^0.9.1",
 		"typescript-cookie": "^1.0.6"

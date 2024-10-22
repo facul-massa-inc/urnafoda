@@ -23,6 +23,10 @@
     input {
         width: 90%;
     }
+    pre {
+        white-space: pre-wrap;
+        width: 90%;
+    }
 </style>
 <input bind:value={command} on:keypress={handleEnter}>
-<p>{result}</p>
+<pre>{result}</pre>
