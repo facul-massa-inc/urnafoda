@@ -4,7 +4,7 @@
     import { type Candidato, BrancoNulo } from "$lib/candidatos_types";
 
     export let data: MainPageData;
-    const digitCount = 4;
+    const digitCount = 2;
     let numeros: number[] = [];
     let candidato: Candidato | BrancoNulo | null = null;
     let fim = data.alreadyVoted;
@@ -164,7 +164,7 @@
     .numero {
         background-color: white;
         height: 100%;
-        width: 100%;
+        aspect-ratio: 27 / 35;
         border: 1px solid black;
         border-radius: 5px;
         display: flex;
