@@ -23,6 +23,5 @@ vite.config.ts.timestamp-*
 # IDE 
 /.vscode
 
-/src/lib/private
-.env
+# DB
 db.sqlite

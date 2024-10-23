@@ -37,7 +37,7 @@ export function innitDb() {
     let nums = candidatos.map(c => c.number);
     db.run(`
         CREATE TABLE IF NOT EXISTS votos (
-            candidato VARCHAR(4), 
+            candidato VARCHAR(4) NOT NULL, 
             votos INT NOT NULL,
             PRIMARY KEY (candidato)
         );
