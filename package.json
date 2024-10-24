@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-node": "^5.2.8",
 		"fracturedjsonjs": "^4.0.2",
 		"sqlite3": "^5.1.7",
 		"ts-dotenv": "^0.9.1",

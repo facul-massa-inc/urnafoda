@@ -25,3 +25,6 @@ vite.config.ts.timestamp-*
 
 # DB
 db.sqlite
+
+# Certificate
+/cert
