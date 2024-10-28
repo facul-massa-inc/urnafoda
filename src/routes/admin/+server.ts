@@ -15,4 +15,4 @@ export async function POST({ request }) {
         resolve(formatter.Serialize(err ?? rows)!)
     ));
     return new Response(res, { status: 200 });
-}   
+}

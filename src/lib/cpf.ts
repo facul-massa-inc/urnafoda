@@ -34,3 +34,22 @@ export function validateCpf(cpf: string) {
     }
     return true;
 }
+
+export function randomCpf() {
+    let digits = Array.from({length: 9}, () => Math.floor(Math.random() * 10));
+    let verifyDigit1 = 0;
+    for(let i = 0 ; i < digits.length; ++i) {
+        verifyDigit1 += digits[i]*(10-i);
+    }
+    let mod = verifyDigit1 % 11;
+    verifyDigit1 = mod < 2 ? 0 : 11 - mod;
+    digits.push(verifyDigit1);
+    let verifyDigit2 = 0;
+    for(let i = 0; i < digits.length; ++i) {
+        verifyDigit2 += digits[i]*(11-i);
+    }
+    mod = verifyDigit2 % 11;
+    verifyDigit2 = mod < 2 ? 0 : 11 - mod;
+    digits.push(verifyDigit2);
+    return digits.join("");
+}
